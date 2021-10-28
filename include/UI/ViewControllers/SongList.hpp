@@ -66,7 +66,6 @@ DECLARE_CLASS_CODEGEN(CustomComponents, SongListCellTableCell, HMUI::TableCell,
     public:
     QuestUI::CustomTextSegmentedControlData* diffs;
     void RefreshData(const SDC_wrapper::BeatStarSong* data);
-    
 )
 
 DECLARE_CLASS_CODEGEN(BetterSongSearch::UI::ViewControllers, SongListViewController, HMUI::ViewController,

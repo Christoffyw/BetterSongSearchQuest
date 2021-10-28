@@ -1,5 +1,6 @@
 #include "main.hpp"
 #include "UI/SelectedSongController.hpp"
+#include "UI/ViewControllers/DownloadHistory.hpp"
 #include "songloader/shared/API.hpp"
 #include "songdownloader/shared/BeatSaverAPI.hpp"
 #include "questui/shared/ArrayUtil.hpp"
@@ -104,6 +105,12 @@ void BetterSongSearch::UI::SelectedSongController::SetSong(const SDC_wrapper::Be
     authorText->set_text(il2cpp_utils::newcsstr(song->GetSongAuthor()));
 }
 
+std::function<void(float)> progressUpdate = [](float value) {
+    getLogger().info("DownloadProgress: %f", value);
+    ViewControllers::DownloadHistoryViewController::RefreshTable(value, 0);
+    getLogger().info("RefreshDownloadList");
+};
+
 void BetterSongSearch::UI::SelectedSongController::DownloadSong()
 {
     BeatSaver::API::GetBeatmapByHashAsync(std::string(currentSong->GetHash()), 
@@ -111,6 +118,14 @@ void BetterSongSearch::UI::SelectedSongController::DownloadSong()
     {
         if(beatmap.has_value())
         {
+            if(downloadTableData) {
+                downloadTableData->data.push_back(currentSong);
+                getLogger().info("Added song to download history");
+                downloadTableData->tableView->ReloadData();
+                getLogger().info("Reloading download history");
+            }
+            else
+                getLogger().info("No downloadTableData found");
             BeatSaver::API::DownloadBeatmapAsync(beatmap.value(),
             [this](bool error) {
                 if (!error) {

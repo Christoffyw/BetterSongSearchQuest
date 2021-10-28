@@ -599,7 +599,10 @@ void ViewControllers::SongListViewController::DidActivate(bool firstActivation, 
                 buttonFitter->set_verticalFit(UnityEngine::UI::ContentSizeFitter::FitMode::PreferredSize);
                 buttonFitter->set_horizontalFit(UnityEngine::UI::ContentSizeFitter::FitMode::PreferredSize);
 
-                auto downloadButton = QuestUI::BeatSaberUI::CreateUIButton(buttonLayout->get_transform(), "Download", "PlayButton", [controller](){controller->DownloadSong();});
+                auto downloadButton = QuestUI::BeatSaberUI::CreateUIButton(buttonLayout->get_transform(), "Download", "PlayButton", [controller](){
+                    controller->DownloadSong();
+
+                });
                 controller->downloadButton = downloadButton;
 
                 auto playButton = QuestUI::BeatSaberUI::CreateUIButton(buttonLayout->get_transform(), "Play", "PlayButton", [controller](){controller->PlaySong();});

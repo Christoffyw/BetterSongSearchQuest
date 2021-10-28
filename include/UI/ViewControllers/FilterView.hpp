@@ -1,6 +1,7 @@
 #pragma once
 
 #include "custom-types/shared/macros.hpp"
+#include "SongList.hpp"
 #include "HMUI/ViewController.hpp"
 
 #define GET_FIND_METHOD(mPtr) il2cpp_utils::il2cpp_type_check::MetadataGetter<mPtr>::get()
